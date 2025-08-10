@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <link
+      rel="icon"
+      href="resources/favicon.ico"
+      type="image/x-icon"
+      sizes="96x96"
+    />
+
+    <title>Guess The Word Game | devChallenges.io</title>
+
+ 
+  </head>
+  <body>
+    <main class="container">
+      <section class="word_scramble">
+        <div class="resultat"></div>
+        <h1>Word Scramble</h1> 
+        <div class="affichage"></div>     
+
+      </section>
+
+      <section class="tries_mistakes">
+        <div  class="tries">
+          <p class="tries_compteur"></p>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+
+        </div>
+        <p class="Mistakes"></p>
+      </section>
+      <section class="section_saisi">
+        <div class="saisi"></div>
+
+      </section>
+      <section class="button">
+        <button class="btn_random">Random</button>
+        <button class="btn_reset">Reset</button>
+      </section>
+    </main>
+
+    <footer>
+      <div class="author-info">
+      Coded by <a href="https://www.linkedin.com/in/zmodeste/">Modeste</a> | Challenge by
+      <a href="https://www.devchallenges.io?ref=challenge" target="_blank"
+        >devChallenges.io</a>.
+    </div>
+    </footer>
+
+    <script>
+      const tableauMot = ['pomme', 'fraise', 'mangue', 'banane'];
+      const afficheMot = document.querySelector('.affichage');
+       const divsaisi = document.querySelector('.saisi');
+       const random =  document.querySelector('.btn_random');
+       const reset = document.querySelector('.btn_reset');
+        const resultat = document.querySelector('.resultat');
+         const triesAffiche = document.querySelector('.tries_compteur');
+         const mistakesAffiche = document.querySelector('.Mistakes');
+         const triesEtapes = document.querySelector('.tries').querySelectorAll('div');
+         
+     
+     
+
+      
+     
+       let tries = 0;
+let mistakes = 0;
+let lettreIntru = [];
+
+
+
+
+let motAleatoire = Math.floor(Math.random()*tableauMot.length);
+let motCorrecte = tableauMot[motAleatoire]; 
+    
+    let motflouter = tableauMot[motAleatoire].split("").sort(()=> Math.random()-0.5).join("");
+     
+   afficheMot.textContent = motflouter; 
+
+
+
+
+ 
+
+  divsaisi.innerHTML = '';
+  triesAffiche.innerHTML = 'Tries(0/6):';
+  mistakesAffiche.innerHTML = 'Mistakes :';
+
+  
+
+    for (let i=0; i<afficheMot.textContent.length; i++) {
+
+      const input = document.createElement('input');
+         input.type = 'text';
+          input.maxLength = 1;
+         input.style.width = '40px';
+         input.style.height = '40px';
+         input.style.borderRadius = '8px';
+         input.style.fontSize = '2rem';
+
+         divsaisi.appendChild(input);
+         
+
+        
+    }
+
+    const inputs = divsaisi.querySelectorAll('input');
+
+      let lettresaisie = [];
+      
+      
+  inputs[0].focus(); 
+
+inputs.forEach((input, index) => {
+
+input.addEventListener('input', function (){
+
+if ( input.value.length === input.maxLength && index+1 < inputs.length) {
+  inputs[index+1].focus();
+};
+
+ lettresaisie[index] = input.value; 
+
+  let  saisie = lettresaisie.join("");
+
+if (saisie === motCorrecte && input.value.length === input.maxLength) {
+  resultat.textContent = '🎉 Success';
+
+};
+
+
+
+
+
+if (saisie !== motCorrecte && saisie.length === motCorrecte.length) {
+
+  if (tries<6 ) {
+    tries++;
+       resultat.textContent = `Oups raté ❌	. encore (${6-tries}) essaie🙄 `;
+
+     } ; 
+
+    if (tries === 6) {
+  resultat.textContent = 'Perdu ! Fin de partie😔'
+  tries = 0;
+  mistakes = 0;
+  inputs[0].focus();
+  lettresaisie = [];
+
+  triesAffiche.textContent = 'Tries(0/6)';
+  lettreIntru.length = 0;
+  mistakesAffiche.textContent = 'Mistakes :';
+
+  setTimeout(() => { resultat.textContent = ''; }, 1000);
+
+  inputs.forEach((input => { input.value=''; }));
+  triesEtapes.forEach(div => { div.style.backgroundColor = '#4A5567'; });
+   return; 
+}
+
+
+
+
+       triesEtapes.forEach((div, index) => {
+  if (index === tries-1) {
+    div.style.backgroundColor = '#C951E7';
+  } 
+
+  triesAffiche.textContent= `Tries(${tries}/6)`;
+});
+
+
+
+
+if (mistakes < 6) {
+
+   lettreIntru = [];
+  for (let intru of saisie) {
+    if (!motCorrecte.includes(intru)) {
+      lettreIntru.push(intru);
+    }
+  }
+
+  if (lettreIntru.length > 0) {
+    mistakes++;
+  }
+
+  mistakesAffiche.textContent = `Mistakes :${lettreIntru}`;
+
+  if (mistakes >= 6) {
+    lettresaisie = []; 
+
+    const inputs = divsaisi.querySelectorAll('input');
+
+    resultat.textContent = 'Perdu ! Fin de partie😔';
+    setTimeout(() => { resultat.textContent = ''; }, 1000);
+
+    tries = 0;
+    mistakes = 0;
+    triesAffiche.textContent = `Tries(${tries}/6)`;
+     lettreIntru.length = 0;     
+       
+   mistakesAffiche.textContent = 'Mistakes :';
+
+   
+    inputs.forEach(i => { i.value = ''; });
+    if (inputs[0]) inputs[0].focus();
+
+    triesEtapes.forEach(div => { div.style.backgroundColor = '#4A5567'; });
+  }
+}
+
+
+
+  
+  
+}
+
+
+
+
+});
+
+input.addEventListener('keydown', function(even) {
+  if (even.key === 'Backspace' && input.value ==='' && index>0) {
+ inputs[index-1].focus();
+  }
+});
+
+
+
+
+});
+
+random.addEventListener('click', function () {
+
+            tries = 0;
+ mistakes = 0;
+
+
+
+
+ motAleatoire = Math.floor(Math.random()*tableauMot.length);
+ motCorrecte = tableauMot[motAleatoire]; 
+    
+     motflouter = tableauMot[motAleatoire].split("").sort(()=> Math.random()-0.5).join("");
+     
+   afficheMot.textContent = motflouter; 
+
+
+
+
+ 
+resultat.textContent = '';
+  divsaisi.innerHTML = '';
+  triesAffiche.innerHTML = 'Tries(0/6):';
+  mistakesAffiche.innerHTML = 'Mistakes :';
+  triesEtapes.forEach(div => { div.style.backgroundColor = '#4A5567'; });
+
+
+  
+
+    for (let i=0; i<afficheMot.textContent.length; i++) {
+
+      const input = document.createElement('input');
+         input.type = 'text';
+          input.maxLength = 1;
+         input.style.width = '40px';
+         input.style.height = '40px';
+         input.style.borderRadius = '8px';
+         input.style.fontSize = '2rem';
+
+         divsaisi.appendChild(input);
+         
+
+        
+    }
+
+    const inputs = divsaisi.querySelectorAll('input');
+
+      let lettresaisie = [];
+      
+      
+  inputs[0].focus(); 
+
+inputs.forEach((input, index) => {
+
+input.addEventListener('input', function (){
+
+if ( input.value.length === input.maxLength && index+1 < inputs.length) {
+  inputs[index+1].focus();
+};
+
+ lettresaisie[index] = input.value; 
+
+  let  saisie = lettresaisie.join("");
+
+if (saisie === motCorrecte && input.value.length === input.maxLength) {
+  resultat.textContent = '🎉 Success';
+
+};
+
+
+
+
+
+if (saisie !== motCorrecte && saisie.length === motCorrecte.length) {
+
+  if (tries<6 ) {
+    tries++;
+       resultat.textContent = `Oups raté ❌	. encore (${6-tries}) essaie🙄 `;
+
+     } ; 
+
+     if (tries === 6) {
+        resultat.textContent = 'Perdu ! Fin de partie😔'
+        tries=0;
+        mistakes = 0;
+         inputs[0].focus(); 
+         lettresaisie = [];
+         lettreIntru = []
+          triesAffiche.textContent = `Tries(${tries}/6)`;
+ mistakesAffiche.textContent = `Mistakes :${lettreIntru}`;
+
+        setTimeout(() => {
+    resultat.textContent = '';
+  }, 1000);
+
+  
+        
+         inputs.forEach((input => {
+          input.value='';                  
+                  
+        }))
+        triesEtapes.forEach((div, index) => {
+  div.style.backgroundColor = '#4A5567';  
+}) ;
+ return; 
+           
+};
+
+
+
+       triesEtapes.forEach((div, index) => {
+  if (index === tries-1) {
+    div.style.backgroundColor = '#C951E7';
+  } 
+
+  triesAffiche.textContent= `Tries(${tries}/6)`;
+});
+
+
+
+
+if (mistakes < 6) {
+
+   lettreIntru = [];
+  for (let intru of saisie) {
+    if (!motCorrecte.includes(intru)) {
+      lettreIntru.push(intru);
+    }
+  }
+
+  if (lettreIntru.length > 0) {
+    mistakes++;
+  }
+
+  mistakesAffiche.textContent = `Mistakes :${lettreIntru}`;
+
+  if (mistakes >= 6) {
+    const inputs = divsaisi.querySelectorAll('input');
+
+    resultat.textContent = 'Perdu ! Fin de partie😔';
+    setTimeout(() => { resultat.textContent = ''; }, 1000);
+
+    tries = 0;
+    mistakes = 0;
+    triesAffiche.textContent = `Tries(${tries}/6)`;
+    mistakesAffiche.textContent = 'Mistakes :';
+
+    lettresaisie = [];
+    inputs.forEach(i => { i.value = ''; });
+    if (inputs[0]) inputs[0].focus();
+
+    triesEtapes.forEach(div => { div.style.backgroundColor = '#4A5567'; });
+  }
+}
+
+
+  
+  
+}
+
+
+
+
+});
+
+input.addEventListener('keydown', function(even) {
+  if (even.key === 'Backspace' && input.value ==='' && index>0) {
+ inputs[index-1].focus();
+  }
+});
+
+
+
+
+});
+
+
+
+
+});
+
+
+   
+
+
+
+
+reset.addEventListener('click', function () {
+   const inputsNow = divsaisi.querySelectorAll('input');
+
+    tries = 0;
+    mistakes = 0;
+    lettreIntru.length = 0;
+
+    triesAffiche.textContent    = 'Tries(0/6)';
+    mistakesAffiche.textContent = 'Mistakes :';
+    resultat.textContent = '';
+
+    lettresaisie = [];
+    inputsNow.forEach(i => { i.value = ''; });
+    if (inputsNow[0]) inputsNow[0].focus();
+
+    triesEtapes.forEach(div => { div.style.backgroundColor = '#4A5567'; });
+
+
+})
+
+
+
+   
+      
+
+
+     
+    </script>
+  </body>
+</html>
