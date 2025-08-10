@@ -8,11 +8,11 @@
 
 <div align="center">
   <h3>
-    <a href="https://your-demo-link.example.com">
+    <a href="https://zm404notfound.github.io/guess-the-word-master/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://github.com/your-username/your-repo">
+    <a href="https://github.com/zm404notfound/guess-the-word-master">
       Solution
     </a>
     <span> | </span>
