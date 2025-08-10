@@ -1,19 +1,18 @@
 <!-- Please update value in the {}  -->
 
-<h1 align="center">{Your project name} | devChallenges</h1>
+<h1 align="center">Guess The Word Game | devChallenges</h1>
 
 <div align="center">
-   Solution for a challenge <a href="https://devchallenges.io/challenge/guess-the-word" target="_blank">Guess The Word Game
-</a> from <a href="http://devchallenges.io" target="_blank">devChallenges.io</a>.
+   Solution for a challenge <a href="https://devchallenges.io/challenge/guess-the-word" target="_blank">Guess The Word Game</a> from <a href="https://devchallenges.io" target="_blank">devChallenges.io</a>.
 </div>
 
 <div align="center">
   <h3>
-    <a href="{https://your-demo-link.your-domain}">
+    <a href="https://your-demo-link.example.com">
       Demo
     </a>
     <span> | </span>
-    <a href="{https://your-url-to-the-solution}">
+    <a href="https://github.com/your-username/your-repo">
       Solution
     </a>
     <span> | </span>
@@ -39,49 +38,54 @@
 
 ## Overview
 
-![screenshot](https://user-images.githubusercontent.com/16707738/92399059-5716eb00-f132-11ea-8b14-bcacdc8ec97b.png)
+![screenshot](./thumbnail.jpg)
 
-<!--
-Introduce your projects by taking a screenshot or a gif. Try to tell visitors a story about your project by answering:
+A small “Guess the Word / Word Scramble” game built for the devChallenges.io challenge.  
+On load (or on **Random**), a word is scrambled and displayed. The player inputs one letter per field. The app tracks wrong attempts (**Tries**) and shows wrong answers (**Mistakes**). The game resets at **6** tries or **6** mistakes and shows **“🎉 Success”** on completion.
 
-- What have you learned/improved?
-- Your wisdom? :)
--->
+- Live Demo: **add your URL**
+- Repository: **add your repo URL**
 
 ### What I learned
 
-<!-- Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge. -->
+- DOM manipulation and dynamic UI rebuild (recreate inputs when the word length changes)
+- Managing simple game state in Vanilla JS (tries, mistakes, result messages)
+- Keyboard UX: auto-focus to next input, Backspace to previous
+- Off-by-one pitfalls (using `< 6` vs `<= 6`)
+- Keeping UI state consistent on resets (inputs, counters, progress bar)
 
 ### Useful resources
 
-<!--
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
--->
+- MDN – [`addEventListener`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+- MDN – [`Element.focus()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus)
+- MDN – [`Array.prototype.includes`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
+- GitHub Pages quick start – https://pages.github.com/
 
 ### Built with
 
-<!-- This section should list any major frameworks that you built your project using. Here are a few examples.-->
-
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- [React](https://reactjs.org/)
-- [Vue.js](https://vuejs.org/)
-- [Tailwind](https://tailwindcss.com/)
+- Semantic **HTML5**
+- **CSS** (custom properties, Flexbox)
+- **Vanilla JavaScript**
 
 ## Features
 
-<!-- List the features of your application or follow the template. Don't share the figma file here :) -->
+- Show a random **scrambled word** on page load
+- **Random** button: new word + rebuilt inputs + reset counters/UI
+- Type **one letter per input**, auto-focus to the next (Backspace goes back)
+- Track wrong attempts (**Tries**) and display which answers are wrong (**Mistakes**)
+- **Reset** button: clear inputs/counters/UI while **keeping the same word**
+- **Auto reset** when `tries === 6` or `mistakes === 6`
+- Show **“🎉 Success”** when the user completes the word
+- Responsive layout (mobile-friendly)
 
-This application/site was created as a submission to a [DevChallenges](https://devchallenges.io/challenges-dashboard) challenge.
+## Contact
+
+- Author: **Modeste**
+- LinkedIn: https://www.linkedin.com/in/zmodeste/
+- GitHub: https://github.com/zm404notfound/
 
 ## Acknowledgements
 
-<!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For exmpale -->
-
-## Author
-
-- Website [your-website.com](https://{your-web-site-link})
-- GitHub [@your-username](https://{github.com/your-usermame})
+- Challenge by **devChallenges.io**
+- Google Fonts (Manrope, Montserrat, Outfit)
+- Favicon & assets in `/resources`
